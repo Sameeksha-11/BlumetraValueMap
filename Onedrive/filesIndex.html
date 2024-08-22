@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OneDrive File List</title>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qs/dist/qs.min.js"></script>
-<script type="module"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneDrive File List</title>
+
 </head>
 <body>
 <h1>OneDrive File List</h1>
@@ -14,51 +12,44 @@
 <p id="status-message"></p>
 <pre id="file-list"></pre>
 
-<script>5
-    const client_id = "9575f570-860e-4801-8142-682ec0129c27";
-    const client_secret = "Wi68Q~SLQ-1eM2XKzXamujdvdTzt5tOTKpFSybe";
-    const tenant_id = "f939db98-9ab3-4b52-8e5a-0d2b6168b56a";
+<script type="module">
+    import axios from 'https://cdn.skypack.dev/axios';
+    import qs from 'https://cdn.skypack.dev/qs';
+    const client_id = "<Client_id>";
+    const client_secret = "<Azure clienct_secret>";
+    const tenant_id = "<tenant-id>";
+    //const tenant_id = "common";
     const scope = 'https://graph.microsoft.com/.default';
     const grant_type = 'client_credentials';
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
     function updateStatusMessage(message) {
         document.getElementById('status-message').textContent = message;
     }
 
-    async function getAccessToken() {
-        updateStatusMessage('Fetching access token...');
-        const token_url = `https://login.microsoftonline.com/${tenant_id}/oauth2/v2.0/token`;
-        const payload = {
-            client_id,
-            client_secret,
-            scope,
-            grant_type
-        };
-
-        try {
-            const response = await axios.post(token_url, qs.stringify(payload), {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
-            updateStatusMessage('Access token fetched successfully.');
-            return response.data.access_token;
-        } catch (error) {
-            console.error('Error fetching access token:', error.response ? error.response.data : error.message);
-            updateStatusMessage('Error fetching access token.');
-            throw error;
-        }
-    }
-
     async function listFiles() {
+        console.log('Fetching files from OneDrive...');
         const fileList = document.getElementById('file-list');
         fileList.textContent = '';
         try {
-            updateStatusMessage('Fetching access token...');
+            console.log('Fetching files from OneDrive...');
+            updateStatusMessage('Fetching access token... List files...');
             const accessToken = await getAccessToken();
-            
+
             updateStatusMessage('Fetching files from OneDrive...');
-            const folderUrl = `https://graph.microsoft.com/v1.0/me/drive/root/children`;
+            console.log("fetching user id...  ");
+            const email = "Sameeksha.Gurrala@blumetra.com"
+            const userUrl = `https://graph.microsoft.com/v1.0/users/${email}`;
+            const res = await axios.get(userUrl, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            const userId = res.data.id;
+            console.log('User ID:', userId);
+
+            // Fetch files from OneDrive, error here is 'me' is used instead of user id
+            const folderUrl = `https://graph.microsoft.com/v1.0/users/${userId}/drive/root/children`;
 
             const response = await axios.get(folderUrl, {
                 headers: {
@@ -74,6 +65,37 @@
             alert('Error listing files: ' + (error.response ? error.response.data.error.message : error.message));
         }
     }
+
+    async function getAccessToken() {
+        console.log('Fetching access token... in getAccessToken()');
+        //updateStatusMessage('Fetching access token...');
+        //error here is 'tenant_id' is expired
+        //to resolve this, go to Azure Active Directory -> App registrations -> Endpoints -> OAuth 2.0 token endpoint
+        // const token_url = `https://login.microsoftonline.com/${tenant_id}/oauth2/v2.0/token`;
+        const payload = {
+            client_id,
+            client_secret,
+            tenant_id,
+            scope,
+            grant_type
+        };
+
+        try {
+            const response = await axios.post('http://localhost:3000/get-token', payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            updateStatusMessage('Access token fetched successfully.');
+            return response.data.access_token;
+        } catch (error) {
+            console.error('Error fetching access token:', error.response ? error.response.data : error.message);
+            updateStatusMessage('Error fetching access token.');
+            throw error;
+        }
+    }
+
+    window.listFiles = listFiles;
 </script>
 </body>
 </html>
