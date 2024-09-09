@@ -1,8 +1,40 @@
 const API_KEY = 'AIzaSyDpv1eTWME9FQD2fqOIBHCEUYW_pezOWBA';
-const SHEET_ID = '1f69lWzxm2BUsBZNSSvxsenOIJymSlBboN-BofV5vB9U';
+let SHEET_ID = '';
 const rangeData = 'All nodes';
 
-const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData}?key=${API_KEY}`;
+
+
+const urlDictionary = {
+    CODVM: '1rJBWryVgtL2nhy7GTAncgTZGEyDrvFbI-xowAyU4k-M',
+    CIDVM: '1Yvh9YvQQx1S4vG1I4aFE18y1-37c7ph8dLv5ZCfAF-4',
+    PMVM: '1Fwo5HHg4LwiZzf5qiU-Y34ksUKNBCTuxs-UIEVXnb60',
+    CDVM: '1ucZ2iFuNvQsK4zssiTLAzdjQE8GWHxR_wc5efk0AxLM',
+    SDVM: '1dnjKSL1G6JlTknQqwZKGIQNshXjlcIU4mw_JFrbr7Uc',
+    PM1VM: '15lvtvZSuWr9yo1jy1HmOXq0cUHXvRvedOMc961AzABA',
+    PM2VM: '1kWjbE04Zzwjmy5NU5XWQXdqDFQNA0zA_XGX5VMEVkX8',
+    FSMVM: '14W6e08hU5l-_XkiPmecDahViJio7u6aV2bRLMUu7zm0',
+    CPDVM: '1i3XwtUmZiZgmS0dHlfFppOQHDyCDjdTUuIqV3GwLo5I',
+    CIDDVM: '1lts-2HA2btKyOGi4ZA3kbUDm19ufDHXA6LZp-jfHNEY'
+};
+
+
+//grab the query string data
+const queryString = window.location.search;
+
+//parse all of the parameters
+const urlParams = new URLSearchParams(queryString);
+
+const vmParam = urlParams.get('vm');
+
+SHEET_ID = urlDictionary[vmParam];
+
+const url = loadSpreadsheet(SHEET_ID);
+
+function loadSpreadsheet(spreadsheetId) {
+    const spreadsheet_url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${rangeData}?key=${API_KEY}`;
+    return spreadsheet_url
+}    
+
 
 const nodes1 = [];
 
@@ -14,19 +46,20 @@ function fetchNodes() {
         }
 
         const values = data.values;
-        const rowsToProcess = values.slice(1);
+        const rowsToProcess = values.slice(2);
 
-        const levels = values[0];
+        const levels = values[1];
 
         rowsToProcess.forEach((row) => {
             row.forEach((cell, colIndex) => {
                 // Skip columns 2 and 5
-                if (colIndex === 2 || colIndex === 5) {
+                if (colIndex === 2 || colIndex === 3 || colIndex === 6 || colIndex === 7) {
                     return;
                 }
                 if (cell) {
                     const level = levels[colIndex];
                     nodes1.push({ lvl: level, name: cell });
+                    
 
                 }
             });
@@ -383,89 +416,14 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
     .then(response => response.json())
     .then(data => {
         // Skip the first row (header) and extract data only from the second column
-        const UseCasesData = data.values.slice(1).map(row => row[2]);
+        const UseCasesTitle = data.values.slice(2).map(row => row[1]);
+        const UseCasesData = data.values.slice(2).map(row => row[2]);
+        const UseCasesLinks = data.values.slice(2).map(row => row[3]);
 
         // Proceed with your D3.js code
-        initializeUseCases(UseCasesData);
+        initializeUseCases(UseCasesData,UseCasesLinks,UseCasesTitle);
     })
     .catch(error => console.error('Error fetching data:', error));
-
-    let currentPopup = null;
-    
-    function initializeUseCases(UseCasesData) {
-        let boxIndex = 0;
-    
-        node.each(function(d) {
-            if (d.lvl == 1) {
-                boxIndex++;
-        
-                var smallerBox = d3.select(this)
-                    .append("rect")
-                    .attr("x", d.x + 0.95 * box_width)
-                    .attr("y", d.y)
-                    .attr("id", d.id + "-smaller-box")
-                    .attr("width", 0.05 * box_width)
-                    .attr("height", 0.66 * box_height)
-                    .attr("class", "smaller-box")
-                    .attr("rx", 2 * box_width)
-                    .attr("ry", 0.66 * box_height);
-        
-                d3.select(this)
-                    .append("text")
-                    .attr("x", d.x + 0.972 * box_width)
-                    .attr("y", d.y + 0.25 * box_height)
-                    .attr("text-anchor", "middle")
-                    .attr("alignment-baseline", "middle")
-                    .text("...")
-                    .style("cursor", "pointer")
-                    .on("click", (function(index) {
-                        return function() {
-                            const text = UseCasesData[index - 1];
-    
-                            if (text) {
-                                // Close the currently open popup, if any
-                                if (currentPopup) {
-                                    document.body.removeChild(currentPopup);
-                                    currentPopup = null;
-                                }
-                                
-                                // Create and show the new popup
-                                const popup = document.createElement("div");
-                                popup.className = "popup";
-    
-                                const content = document.createElement("div");
-                                content.className = "popup-content";
-                                content.innerHTML = text;
-    
-                                popup.appendChild(content);
-    
-                                const closeButton = document.createElement("button");
-                                closeButton.className = "popup-close";
-                                closeButton.innerText = "close";
-                                closeButton.onclick = function() {
-                                    document.body.removeChild(popup);
-                                    currentPopup = null;
-                                };
-    
-                                popup.appendChild(closeButton);
-                                document.body.appendChild(popup);
-    
-                                const { x, y } = this.getBoundingClientRect();
-                                popup.style.position = 'absolute';
-                                popup.style.left = `${x + window.scrollX}px`;
-                                popup.style.top = `${y + window.scrollY}px`;
-    
-                                currentPopup = popup;
-                            }
-                        };
-                    })(boxIndex));
-            }
-        });
-    }
-    
-    
-    
-   
 
 
     const FeaturesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData}?key=${API_KEY}`;
@@ -474,89 +432,156 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
         .then(response => response.json())
         .then(data => {
             // Skip the first row (header) and extract data only from the second column
-            const FeaturesCapabilitiesData = data.values.slice(1).map(row => row[5]);
+            const FeaturesCapabilitiesTitles = data.values.slice(2).map(row => row[5]);
+            const FeaturesCapabilitiesData = data.values.slice(2).map(row => row[6]);
+            const FeaturesCapabilitiesLinks = data.values.slice(2).map(row => row[7]);
     
             // Proceed with your D3.js code
-            initializeFeatures(FeaturesCapabilitiesData);
+            initializeFeatures(FeaturesCapabilitiesData, FeaturesCapabilitiesLinks, FeaturesCapabilitiesTitles);
         })
         .catch(error => console.error('Error fetching data:', error));
+    
+    
+    let currentPopup = null;
 
+function showPopup(title, text, link) {
+    // Remove the existing popup if there is one
+    if (currentPopup) {
+        document.body.removeChild(currentPopup);
+    }
 
+    // Create a new popup element
+    const popup = document.createElement("div");
+    popup.className = "popup";
 
-        function initializeFeatures(FeaturesCapabilitiesData) {
-            let boxIndex = 0;
-            
-            node.each(function(d) {
-                if (d.lvl == 3) { // Assuming lvl 3 is the correct level for Features
-                    boxIndex++;
-            
-                    var smallerBox = d3.select(this)
-                        .append("rect")
-                        .attr("x", d.x + 0.95 * box_width)
-                        .attr("y", d.y)
-                        .attr("id", d.id + "-smaller-box")
-                        .attr("width", 0.05 * box_width)
-                        .attr("height", 0.66 * box_height)
-                        .attr("class", "smaller-box")
-                        .attr("rx", 2 * box_width)
-                        .attr("ry", 0.66 * box_height);
-            
-                    d3.select(this)
-                        .append("text")
-                        .attr("x", d.x + 0.972 * box_width)
-                        .attr("y", d.y + 0.25 * box_height)
-                        .attr("text-anchor", "middle")
-                        .attr("alignment-baseline", "middle")
-                        .text("...")
-                        .style("cursor", "pointer")
-                        .on("click", (function(index) {
-                            return function() {
-                                const text = FeaturesCapabilitiesData[index - 1];
-                                
-                                if (text) {
-                                    // Close the currently open popup, if any
-                                    if (currentPopup) {
-                                        document.body.removeChild(currentPopup);
-                                        currentPopup = null;
-                                    }
-                                    
-                                    // Create and show the new popup
-                                    const popup = document.createElement("div");
-                                    popup.className = "popup";
-        
-                                    const content = document.createElement("div");
-                                    content.className = "popup-content";
-                                    content.innerHTML = text;
-        
-                                    popup.appendChild(content);
-        
-                                    const closeButton = document.createElement("button");
-                                    closeButton.className = "popup-close";
-                                    closeButton.innerText = "close";
-                                    closeButton.onclick = function() {
-                                        document.body.removeChild(popup);
-                                        currentPopup = null;
-                                    };
-        
-                                    popup.appendChild(closeButton);
-                                    document.body.appendChild(popup);
-        
-                                    const { x, y } = this.getBoundingClientRect();
-                                    popup.style.position = 'absolute';
-                                    popup.style.left = `${x + window.scrollX}px`;
-                                    popup.style.top = `${y + window.scrollY}px`;
-        
-                                    currentPopup = popup;
-                                }
-                            };
-                        })(boxIndex));
-                }
-            });
+    // Create and append the popup content
+    const content = document.createElement("div");
+    content.className = "popup-content";
+
+    const titleElement = document.createElement("strong");
+    titleElement.innerText = title + ":";
+    content.appendChild(titleElement);
+
+    content.appendChild(document.createElement("br"));
+
+    const textElement = document.createElement("span");
+    textElement.innerHTML = text;
+    content.appendChild(textElement);
+
+    popup.appendChild(content);
+
+    
+
+    const additionalLinks = document.createElement("button");
+    additionalLinks.innerText = "Additional Information";
+    additionalLinks.className = "popup-button";
+    if (link && isValidUrl(link)) {
+        popup.appendChild(additionalLinks);
+        additionalLinks.onclick = function() {
+            window.open(link, '_blank');
+        }; 
+    } else {
+        console.log("Check the validity of the link on the spreadsheet")
+}
+    
+
+    // Create and append the close button
+    const closeButton = document.createElement("button");
+    closeButton.innerText = "Close";
+    closeButton.className = "popup-button";
+    closeButton.onclick = function() {
+        document.body.removeChild(popup);
+        currentPopup = null;
+    };
+    popup.appendChild(closeButton);
+
+    // Create and append the additional links button
+    
+
+    // Append the popup to the body
+    document.body.appendChild(popup);
+    currentPopup = popup;
+}
+
+function initializeUseCases(UseCasesData, UseCasesLinks, UseCasesTitle) {
+    let boxIndex = 0;
+
+    node.each(function(d) {
+        if (d.lvl == 1) {
+            boxIndex++;
+
+            d3.select(this)
+                .append("rect")
+                .attr("x", d.x + 0.95 * box_width)
+                .attr("y", d.y)
+                .attr("id", d.id + "-smaller-box")
+                .attr("width", 0.05 * box_width)
+                .attr("height", 0.66 * box_height)
+                .attr("class", "smaller-box")
+                .attr("rx", 2 * box_width)
+                .attr("ry", 0.66 * box_height);
+
+            d3.select(this)
+                .append("text")
+                .attr("x", d.x + 0.972 * box_width)
+                .attr("y", d.y + 0.25 * box_height)
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "middle")
+                .text("...")
+                .style("cursor", "pointer")
+                .on("click", (function(index) {
+                    return function() {
+                        const title = UseCasesTitle[index - 1];
+                        const text = UseCasesData[index - 1];
+                        const link = UseCasesLinks[index - 1];
+                        if (text) {
+                            showPopup(title, text, link);
+                        }
+                    };
+                })(boxIndex));
         }
-        
-    
+    });
+}
 
-    
+function initializeFeatures(FeaturesCapabilitiesData, FeaturesCapabilitiesLinks, FeaturesCapabilitiesTitles) {
+    let boxIndex = 0;
+
+    node.each(function(d) {
+        if (d.lvl == 3) {
+            boxIndex++;
+
+            d3.select(this)
+                .append("rect")
+                .attr("x", d.x + 0.95 * box_width)
+                .attr("y", d.y)
+                .attr("id", d.id + "-smaller-box")
+                .attr("width", 0.05 * box_width)
+                .attr("height", 0.66 * box_height)
+                .attr("class", "smaller-box")
+                .attr("rx", 2 * box_width)
+                .attr("ry", 0.66 * box_height);
+
+            d3.select(this)
+                .append("text")
+                .attr("x", d.x + 0.972 * box_width)
+                .attr("y", d.y + 0.25 * box_height)
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "middle")
+                .text("...")
+                .style("cursor", "pointer")
+                .on("click", (function(index) {
+                    return function() {
+                        const title = FeaturesCapabilitiesTitles[index - 1];
+                        const text = FeaturesCapabilitiesData[index - 1];
+                        const link = FeaturesCapabilitiesLinks[index - 1];
+                        if (text) {
+                            showPopup(title, text, link);
+                        }
+                    };
+                })(boxIndex));
+        }
+    });
+}
 
     
     
@@ -573,7 +598,20 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
             .attr("id", "chart_title")
             .attr("x", 0.00625*width)
             .attr("y", 0.015625*height)
-            .text("Customer(Org) Data - Value Map");
+        
+            fetch(url) //initiate network request to the url
+            .then(response => response.json()) //make the response as a json request
+            .then(data => {//with the new json object operate on the data
+                //extract the first row from the data
+                const firstRow = data.values[0];
+                //first cell of the first row
+                const firstRowText = firstRow[0];
+        
+                // Set the text to the element (for example, a text element in D3.js)
+                d3.select("#chart_title") // Replace with the actual ID of the element you want to set the text for
+                    .text(firstRowText);
+            })
+            .catch(error => console.error('Error fetching data:', error));
             
             
             
@@ -669,6 +707,18 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
        .attr("y", 0.0000000000000000000000000001*height)
        .attr("width", 200) 
        .attr("height", 36);
+
+
+
+
+function isValidUrl(link) {
+    try {
+        new URL(link);
+        return true;
+    } catch (e) {
+        return false;
+        }
+}
 
     
 
