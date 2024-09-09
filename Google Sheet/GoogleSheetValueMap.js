@@ -16,24 +16,15 @@ function fetchNodes() {
         const values = data.values;
         const rowsToProcess = values.slice(1);
 
-        const levels = values[0];
-
-        rowsToProcess.forEach((row) => {
-            row.forEach((cell, colIndex) => {
-                // Skip columns 2 and 5
-                if (colIndex === 2 || colIndex === 5) {
-                    return;
-                }
+        rowsToProcess.forEach((row, colIndex) => {
+            row.forEach((cell, rowIndex) => {
                 if (cell) {
-                    const level = levels[colIndex];
-                    nodes1.push({ lvl: level, name: cell });
-
+                    nodes1.push({ lvl: rowIndex.toString(), name: cell });
                 }
             });
         });
     });
 }
-
 
 
 
@@ -83,8 +74,11 @@ let data = {
 // Execute all fetch functions and wait for them to complete
 Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)])
     .then(() => {
+
         data.nodes = nodes1;
         data.links = links1;
+        console.log("Nodes data:", nodes1);
+        console.log("Data inside Promise.all:", data);
 
         // console.log("Data inside Promise.all:", data);
         create_relationship_diagram(data)
@@ -95,12 +89,12 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
         // For example, you can initialize the D3 visualization here
     })
     .catch(error => {
-        console.error('Check to make sure that changes are made to both All Nodes and the levels on the spreadsheet', error);
+        console.error('Error fetching data:', error);
     });
 
 
 
-    // console.log("Data outside Promise.all:", data);
+    console.log("Data outside Promise.all:", data);
 
 
     var width = 1600,
@@ -368,32 +362,38 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
                 untravel_links();
             });
 
-            var businessValueNodesCount = nodes.filter(function(d) {
-                return d.lvl == 0; // Adjust 0 to the appropriate level number for "Business Value"
-            }).length;
-        
-            var useCasesCount = nodes.filter(function(d) {
-                return d.lvl == 1; // Adjust 0 to the appropriate level number for "Business Value"
-            }).length;
-        
-            var capabilitiesCount = nodes.filter(function(d) {
-                return d.lvl == 2; // Adjust 0 to the appropriate level number for "Business Value"
-            }).length;
             
-          
-
-    const UseCasesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData}?key=${API_KEY}`;
+       //============copy till here==================
+    const rangeData4 = "Use Cases Popup"
+    const UseCasesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData4}?key=${API_KEY}`;
     
     fetch(UseCasesUrl)
     .then(response => response.json())
     .then(data => {
         // Skip the first row (header) and extract data only from the second column
-        const UseCasesData = data.values.slice(1).map(row => row[2]);
-
+        const UseCasesData = data.values.slice(1).map(row => row[1]);
+        console.log("usecase data", UseCasesData);
         // Proceed with your D3.js code
         initializeUseCases(UseCasesData);
     })
     .catch(error => console.error('Error fetching data:', error));
+    
+    
+    
+    
+    
+    
+    var businessValueNodesCount = nodes.filter(function(d) {
+        return d.lvl == 0; // Adjust 0 to the appropriate level number for "Business Value"
+    }).length;
+
+    var useCasesCount = nodes.filter(function(d) {
+        return d.lvl == 1; // Adjust 0 to the appropriate level number for "Business Value"
+    }).length;
+
+    var capabilitiesCount = nodes.filter(function(d) {
+        return d.lvl == 2; // Adjust 0 to the appropriate level number for "Business Value"
+    }).length;
     
     
     function initializeUseCases(UseCasesData) {
@@ -467,23 +467,25 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
             }
         });
     }
-    
 
-    const FeaturesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData}?key=${API_KEY}`;
+
+
+    const rangeData5 = "Features Popup";
+    const FeaturesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${rangeData5}?key=${API_KEY}`;
     
     fetch(FeaturesUrl)
         .then(response => response.json())
         .then(data => {
             // Skip the first row (header) and extract data only from the second column
-            const FeaturesCapabilitiesData = data.values.slice(1).map(row => row[5]);
+            const FeaturesCapabilitiesData = data.values.slice(1).map(row => row[1]);
     
             // Proceed with your D3.js code
             initializeFeatures(FeaturesCapabilitiesData);
         })
         .catch(error => console.error('Error fetching data:', error));
     
-
-    function initializeFeatures(FeaturesCapabilitiesData) {
+    document.addEventListener("DOMContentLoaded", function() {
+        function initializeFeatures(FeaturesCapabilitiesData) {
         let boxIndex = 0;
         let currentPopup = null;
     
@@ -542,7 +544,7 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
                                 const closeButton = document.createElement("button");
                                 
                                 //give the closebutton const the same html as the Close html
-                                closeButton.innerText = "close";
+                                closeButton.innerText = "popup-close";
                     
                                 //if the close button is clicked then remove the popup
                                 closeButton.onclick = function() {
@@ -566,8 +568,9 @@ Promise.all([fetchNodes(), fetchLinks(url1), fetchLinks(url2), fetchLinks(url3)]
             }
         });
     }
+});
 
-    
+    //=================continure from here==================
     
         node.append("text")
             .attr("class", function (d) { return "label" + d.lvl; })

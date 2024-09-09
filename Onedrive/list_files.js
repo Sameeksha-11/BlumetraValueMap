@@ -2,7 +2,7 @@ const axios = require('axios');
 const qs = require('qs');
  
 const client_id = "9575f570-860e-4801-8142-682ec0129c27";
-const client_secret = "Wi68Q~SLQ-1eM2XKzXamujdvdTzt5tOTKpFSybe";
+const client_secret = "dd9a8af0-44eb-4b45-a43e-bd8df7f66213";
 const tenant_id = "f939db98-9ab3-4b52-8e5a-0d2b6168b56a";
 const scope = 'https://graph.microsoft.com/.default';
 const grant_type = 'client_credentials';

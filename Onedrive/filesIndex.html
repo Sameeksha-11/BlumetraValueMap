@@ -1,10 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneDrive File List</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qs/dist/qs.min.js"></script>
+    <script type="module"></script>
 </head>
 <body>
 <h1>OneDrive File List</h1>
@@ -12,66 +15,20 @@
 <p id="status-message"></p>
 <pre id="file-list"></pre>
 
-<script type="module">
-    import axios from 'https://cdn.skypack.dev/axios';
-    import qs from 'https://cdn.skypack.dev/qs';
-    const client_id = "<Client_id>";
-    const client_secret = "<Azure clienct_secret>";
-    const tenant_id = "<tenant-id>";
-    //const tenant_id = "common";
+<script>
+    const client_id = "9575f570-860e-4801-8142-682ec0129c27";
+    const client_secret = "Wi68Q~SLQ-1eM2XKzXamujdvdTzt5tOTKpFSybe.";
+    const tenant_id = "f939db98-9ab3-4b52-8e5a-0d2b6168b56a";
     const scope = 'https://graph.microsoft.com/.default';
     const grant_type = 'client_credentials';
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const id='dcd86cce-36cd-4be2-bac7-6ce7e0dbde39';
 
     function updateStatusMessage(message) {
         document.getElementById('status-message').textContent = message;
     }
 
-    async function listFiles() {
-        console.log('Fetching files from OneDrive...');
-        const fileList = document.getElementById('file-list');
-        fileList.textContent = '';
-        try {
-            console.log('Fetching files from OneDrive...');
-            updateStatusMessage('Fetching access token... List files...');
-            const accessToken = await getAccessToken();
-
-            updateStatusMessage('Fetching files from OneDrive...');
-            console.log("fetching user id...  ");
-            const email = "Sameeksha.Gurrala@blumetra.com"
-            const userUrl = `https://graph.microsoft.com/v1.0/users/${email}`;
-            const res = await axios.get(userUrl, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            });
-            const userId = res.data.id;
-            console.log('User ID:', userId);
-
-            // Fetch files from OneDrive, error here is 'me' is used instead of user id
-            const folderUrl = `https://graph.microsoft.com/v1.0/users/${userId}/drive/root/children`;
-
-            const response = await axios.get(folderUrl, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            });
-            const files = response.data.value;
-            fileList.textContent = JSON.stringify(files, null, 2);
-            updateStatusMessage('Files fetched successfully.');
-        } catch (error) {
-            console.error('Error listing files:', error.response ? error.response.data : error.message);
-            updateStatusMessage('Error listing files.');
-            alert('Error listing files: ' + (error.response ? error.response.data.error.message : error.message));
-        }
-    }
-
     async function getAccessToken() {
-        console.log('Fetching access token... in getAccessToken()');
-        //updateStatusMessage('Fetching access token...');
-        //error here is 'tenant_id' is expired
-        //to resolve this, go to Azure Active Directory -> App registrations -> Endpoints -> OAuth 2.0 token endpoint
-        // const token_url = `https://login.microsoftonline.com/${tenant_id}/oauth2/v2.0/token`;
+        updateStatusMessage('Fetching access token...');
         const payload = {
             client_id,
             client_secret,
@@ -81,13 +38,15 @@
         };
 
         try {
-            const response = await axios.post('http://localhost:3000/get-token', payload, {
+            const response = await axios.post('http://localhost:3000/get-token', Qs.stringify(payload), {
                 headers: {
-                    'Content-Type': 'application/json',
-                },
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             });
             updateStatusMessage('Access token fetched successfully.');
+            updateStatusMessage('Accessing files... please wait...');
             return response.data.access_token;
+
         } catch (error) {
             console.error('Error fetching access token:', error.response ? error.response.data : error.message);
             updateStatusMessage('Error fetching access token.');
@@ -95,7 +54,241 @@
         }
     }
 
+    async function listFiles() {
+        const fileList = document.getElementById('file-list');
+        fileList.textContent = '';
+
+        try {
+            updateStatusMessage('Fetching access token... List files...');
+            const accessToken = await getAccessToken();
+
+            updateStatusMessage('Fetching files from OneDrive...');
+
+            //accessing ValueMap Blumetra sharepoint link
+            //const site_id='blumetra.sharepoint.com,88168430-4600-41ce-a6cb-e7fa8b105648,833f9a06-843e-4392-905b-9c6fd646932b';
+            const sharepointfilePath='https://graph.microsoft.com/v1.0/sites/blumetra.sharepoint.com,88168430-4600-41ce-a6cb-e7fa8b105648,833f9a06-843e-4392-905b-9c6fd646932b/drive/root/children';
+            const response_1 = await axios.get(sharepointfilePath, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            updateStatusMessage('Files from sharepoint fetched successfully.');
+            //read the excel file
+            if (response_1.data.value.length > 0) {
+                await readExcel();
+            } else {
+                updateStatusMessage('No files found to read');
+            }
+
+        }
+
+        catch (error) {
+            console.error('Error listing files:', error.response ? error.response.data : error.message);
+            updateStatusMessage('Error listing files.');
+            alert('Error listing files: ' + (error.response ? error.response.data.error.message : error.message));
+        }
+    }
+
+
+    //READING FILE FUNCTION
+    async function readExcel() {
+        console.log("Reading Excel file...");
+        try {
+            updateStatusMessage('Reading Excel file...');
+            const accessToken = await getAccessToken();
+
+            const itemId = '01352GCHU4GAY6MORAFFB2FSKVF6KCD47P';
+            const driveId='b!MIQWiABGzkGmy-f6ixBWSAaaP4M-hJJDkFucb9ZGkyug_ZpS1I0kQ7uC8cfIzPpV';
+
+            const worksheetsUrl = `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${itemId}/workbook/worksheets`;
+
+            const response = await axios.get(worksheetsUrl, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/json'
+                }
+            });
+
+            const worksheets = response.data.value;
+
+            const worksheetsDict = {};
+
+            worksheets.forEach(sheet => {
+                worksheetsDict[sheet.id] = sheet.name;
+            });
+
+
+            // Get the keys of the dictionary
+            const worksheetIds = Object.keys(worksheetsDict);
+
+            //this dictionary stores the worksheet id in the spread sheet and their respective row counts(which are transformed and stored for easy access while calling Graph API to read the spreadsheet)
+            const worksheetsRowCountDict = {};
+            //READING THE FIRST SHEET OF EXCEL FILE
+            const id = worksheetIds[0];
+            //getting the rowcount in the file
+            const rowcount = await getRowCount(driveId, itemId, id, accessToken);
+            console.log("the row count of the first sheet is:",rowcount);
+            //transform the row count value from 41 rows to A1:B41 as needed by the Graph API call
+            const startColumn = 'A';
+            const endColumn = 'D';
+
+            // Create the range address string
+            const rangeAddress = `${startColumn}1:${endColumn}${rowcount}`;
+
+            const rangeUrl = `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${itemId}/workbook/worksheets/${id}/range(address='${rangeAddress}')`;
+
+            const firstsheet_response = await axios.get(rangeUrl, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/json'
+                }
+            });
+
+            // Process the response data
+            const firstsheet_data = firstsheet_response.data;
+            const values = firstsheet_data.values;
+
+            // Transform the input data to the desired format, skipping the first row and empty entries
+            console.log("Started processing the first sheet of the excel file");
+            const nodes = values.slice(1).flatMap((row, rowIndex) =>
+                row
+                    .map((name, colIndex) => ({
+                        lvl: colIndex.toString(),
+                        name: name || '' // Assign empty string if name is not present
+
+                    }))
+                    .filter(entry => entry.name) // Filter out entries where name is empty
+            );
+
+            //Output the result
+            console.log(`Nodes list from first worksheets is:`);
+           // console.log(JSON.stringify(nodes, null, 2));
+
+            //  asynchronous operations sequentially for all other sheet
+            console.log("Started processing the other sheets of the excel file");
+            for (const id of worksheetIds.slice(1)) {
+                console.log(`Processing worksheet ID ${id}...`);
+                const rowCount = await getRowCount(driveId, itemId, id, accessToken);
+                //transform the row count value from 41 rows to A1:B41 as needed by the Graph API call
+                const startColumn = 'A';
+                const endColumn = 'B';
+                // Create the range address string
+                const rangeAddress = `${startColumn}1:${endColumn}${rowCount}`;
+                // Update the dictionary with the worksheet ID and row count
+                if (rowCount !== null) {
+                    worksheetsRowCountDict[id] = rangeAddress;
+                }
+
+            }
+
+            //initializing combined array for storing all the values in all worksheets
+            const nodes2 = [];
+            for (const [worksheetId, workRowCount] of Object.entries(worksheetsRowCountDict)) {
+                const data = await fetchAndProcessData(worksheetId, workRowCount);
+
+                // combining data
+                nodes2.push(...data);
+            }
+            // Transform the input data to the desired format
+            const links = nodes2.map(([target, source]) => ({
+                target,
+                source
+            }));
+
+            // Output the result
+            const data = {
+                nodes,
+                links
+            };
+
+            //Send the data to the server
+            sendDataToServer();
+            async function sendDataToServer(){
+                try{
+                    const response = await fetch('http://localhost:3000/save-data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+
+                    console.log('Data sent successfully');
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error('Error sending data:', error);
+                }
+            }
+
+
+            async function fetchAndProcessData(worksheetId, workRowCount) {
+                // Construct the range URL dynamically
+                const rangeAddress = workRowCount;
+                const rangeUrl = `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${itemId}/workbook/worksheets/${worksheetId}/range(address='${rangeAddress}')`;
+
+                try {
+                    // Fetch data from the worksheet
+                    const response = await axios.get(rangeUrl, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    // Process the response data
+                    const data = response.data;
+                    const values = data.values;
+
+                    if (!values || values.length === 0) {
+                        return {};  // Return an empty dictionary if no values
+                    }
+
+                    return values;
+
+
+
+                } catch (error) {
+                    console.error(`Error fetching data for worksheet '${worksheetId}':`, error);
+                    return {};  // Return an empty object in case of an error
+                }
+            }
+
+            // Asynchronous function to get row count
+            async function getRowCount(driveId, itemId, worksheetId, accessToken) {
+                const url = `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${itemId}/workbook/worksheets/${worksheetId}/usedRange`;
+
+                try {
+                    const response = await axios.get(url, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    //const data = response.data;
+                    const rowCount = response.data.rowCount;
+                    return rowCount;
+
+                } catch (error) {
+                    console.error(`Error fetching data for Worksheet ID ${worksheetId}:`, error);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error reading Excel file:', error.response ? error.response.data : error.message);
+            updateStatusMessage('Error reading Excel file.');
+            alert('Error reading Excel file: ' + (error.response ? error.response.data.error.message : error.message));
+        }
+    }
+
+
     window.listFiles = listFiles;
+
 </script>
 </body>
 </html>
