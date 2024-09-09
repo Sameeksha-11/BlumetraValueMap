@@ -1,0 +1,107 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.js"></script>
+<style>
+    rect {
+        fill: #6B5A74;
+        cursor: pointer;
+    }
+
+    .col1 {
+        fill: #c1abcd;
+    }
+
+    .col2 {
+        fill: #237F8C;
+    }
+
+    .col3 {
+        fill: #7BD2DE;
+    }
+
+    .label3 {
+        fill: #001E59;
+    }
+
+    #chart_title {
+        font-size: x-large;
+        font-family: sans-serif;
+        font-weight: 600;
+    }
+
+    .col_title {
+        fill: hwb(0deg 80.79% 19.21%);
+        cursor: default;
+    }
+
+    .col_title_text {
+        font-family: sans-serif;
+        fill: #3c3c3c;
+        font-weight: 500;
+    }
+
+    .label0,
+    .label2 {
+        fill: white;
+        font-family: sans-serif;
+        pointer-events: none;
+    }
+
+    .label1,
+    .label3 {
+        font-family: sans-serif;
+        pointer-events: none;
+        font-size: small;
+    }
+
+    .link {
+        fill: none;
+        stroke: #979595;
+        stroke-width: 1px;
+    }
+
+    .active,
+    .active_clk {
+        fill: orange;
+        stroke: orange;
+    }
+
+    .activelink,
+    .activelink_clk {
+        fill: none;
+        stroke: orange;
+        stroke-width: 2.5px;
+    }
+
+
+    .label0, .label2 {
+        transform: translateY(10px);
+    }
+
+    .popup {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); /* Center the popup */
+        padding: 20px;
+        background-color: white;
+        border: 1px solid black;
+        z-index: 1000; /* Ensure it's on top of other elements */
+    }
+
+    .popup-content{
+        margin-bottom: 10px;
+    }
+
+    .popup-close {
+        display: block;
+        margin-top: 10px; /* Adds space above the button */
+        background: #f1f1f1;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+</style>
+
+<div id="rel_diagram"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="Blumetra_ValueMap.js"></script>

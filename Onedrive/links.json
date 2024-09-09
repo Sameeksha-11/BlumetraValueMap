@@ -1,0 +1,687 @@
+[
+  {
+    "source": "Top Line (Growth)",
+    "target": "Prospect Marketing"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Competitive Analysis"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Customer Marketing"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "White Space Analysis"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Marketing Effectiveness"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Search Before Create"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Omni-Channel Integration"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Customer Segmentation"
+  },
+
+  {
+    "source": "Top Line (Growth)",
+    "target": "Pricing Optimization"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Forecasting/Quota Alignment"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Lead Account Match"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Net New Logo"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Sales Territory Management"
+  },
+
+  {
+    "source": "Top Line (Growth)",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Top Line (Growth)",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Marketing Effectiveness"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Search Before Create"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Omni-Channel Integration"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Pricing Optimization"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Account Management"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Sales Incentive Comp"
+  },
+
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Self Service Analytics"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Customer Health"
+  },
+
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "M&A Management"
+  },
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Streamlined Collections"
+  },
+
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Risk Assessment"
+  },
+
+  {
+    "source": "Bottomline (Optimization)",
+    "target": "Avoidance of Manual Work"
+  },
+
+  {
+    "source": "Customer Experience",
+    "target": "Web Registration"
+  },
+  {
+    "source": "Customer Experience",
+    "target": "Customer Health"
+  },
+  {
+    "source": "Customer Experience",
+    "target": "Tax Calculation"
+  },
+
+  {
+    "source": "Compliance & Risk",
+    "target": "Web Registration"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Sales Incentive Comp"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Customer Health"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Financial & Compliance Rpt."
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Regulatory Compliance"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Risk Assessment"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Avoidance of Manual Work"
+  },
+  {
+    "source": "Compliance & Risk",
+    "target": "Audit Transparency"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Prospect Marketing"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Customer Marketing"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Marketing Effectiveness"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Search before Create"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Omni-Channel Integration"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Web Registration"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Forecasting/Quota Alignment"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Net New Logo"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Sales Territory Management"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Account Management"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Sales Incentive Comp"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Self Service Analytics"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Customer Health"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Streamlined Collections"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Avoidance of Manual Work"
+  },
+
+  {
+    "source": "Unique Customer Profile",
+    "target": "Identity Attribute Mgt."
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Core Attribute Mgt."
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Search Before Create"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Match & Merge"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "Trust & Survivorship"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "External Match"
+  },
+  {
+    "source": "Unique Customer Profile",
+    "target": "MDMID Cross Reference"
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Prospect Marketing"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Competitive Analysis"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Customer Marketing"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Marketing Effectiveness"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Search Before Create"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Customer Segmentation"
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Pricing Optimization"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Lead Account Match"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Sales Territory Management"
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Self Service Analytics"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Customer Health"
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Streamlined Collections"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Financial & Compliance Rpt."
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Tax Calculation"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Avoidance of Manual Work"
+  },
+
+  {
+    "source": "Accurate Information",
+    "target": "Synonym Replacement"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Validation Rules"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Business Verification"
+  },
+  {
+    "source": "Accurate Information",
+    "target": "Address Validation"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Prospect Marketing"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Competitive Analysis"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Customer Marketing"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Search Before Create"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Customer Segmentation"
+  },
+
+
+  {
+    "source": "Customer Relationships",
+    "target": "Pricing Optimization"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Lead Account Match"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Account Management"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Sales Incentive Comp"
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Customer Health"
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "M&A Management"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Financial & Compliance Rpt."
+  },
+
+
+  {
+    "source": "Customer Relationships",
+    "target": "Sales Territory Management"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Account Management"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Sales Incentive Comp"
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Customer Health"
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "M&A Management"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Financial & Compliance Rpt."
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "Risk Assessment"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Tax Calculation"
+  },
+
+  {
+    "source": "Customer Relationships",
+    "target": "Hierarchy Modeling"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Related Entities"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Product Master Relationship"
+  },
+  {
+    "source": "Customer Relationships",
+    "target": "Contact Master Relationship"
+  },
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Prospect Marketing"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Competitive Analysis"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Customer Marketing"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "White Space Analysis"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Marketing Effectiveness"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Omni-Channel Integration"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Customer Segmentation"
+  },
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Sales Territory Management"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Account Management"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Sales Incentive Comp"
+  },
+
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Organization 360"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Customer Health"
+  },
+
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "M&A Management"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Financial & Compliance Rpt."
+  },
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Risk Assessment"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Tax Calculation"
+  },
+
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Firmographic Data"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Technographic Data"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Financial Data"
+  },
+  {
+    "source": "3rd Party Enrichment",
+    "target": "Activity/Intent Data"
+  },
+
+  {
+    "source": "Data Governance",
+    "target": "Organization 360"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Enterprise Analytics"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Self Service Analytics"
+  },
+
+  {
+    "source": "Data Governance",
+    "target": "M&A Management"
+  },
+
+  {
+    "source": "Data Governance",
+    "target": "Risk Assessment"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Tax Calculation"
+  },
+
+  {
+    "source": "Data Governance",
+    "target": "Avoidance of Manual Work"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Audit Transparency"
+  },
+
+  {
+    "source": "Data Governance",
+    "target": "Data Stewardship"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Metadata Management"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Data Lineage & Impact"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Policies & Procedures"
+  },
+  {
+    "source": "Data Governance",
+    "target": "Data Privacy & Security"
+  },
+
+  {
+    "source": "Technology Framework",
+    "target": "Web Registration"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Regulatory Compliance"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Avoidance of Manual Work"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Audit Transparency"
+  },
+
+  {
+    "source": "Technology Framework",
+    "target": "Data Tokenization"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Ingress/Egress Patterns"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "API Management/Perf"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Workflows"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Audit/Exception Reporting"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "AI/ML Support"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "History Tracking"
+  },
+  {
+    "source": "Technology Framework",
+    "target": "Observability"
+  }
+]

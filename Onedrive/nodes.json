@@ -1,0 +1,296 @@
+[
+  {
+    "lvl": 0,
+    "name": "Top Line (Growth)"
+  },
+  {
+    "lvl": 0,
+    "name": "Bottomline (Optimization)"
+  },
+  {
+    "lvl": 0,
+    "name": "Customer Experience"
+  },
+  {
+    "lvl": 0,
+    "name": "Compliance & Risk"
+  },
+  {
+    "lvl": 1,
+    "name": "Prospect Marketing"
+  },
+  {
+    "lvl": 1,
+    "name": "Competitive Analysis"
+  },
+  {
+    "lvl": 1,
+    "name": "Customer Marketing"
+  },
+  {
+    "lvl": 1,
+    "name": "White Space Analysis"
+  },
+  {
+    "lvl": 1,
+    "name": "Marketing Effectiveness"
+  },
+  {
+    "lvl": 1,
+    "name": "Search Before Create"
+  },
+  {
+    "lvl": 1,
+    "name": "Omni-Channel Integration"
+  },
+  {
+    "lvl": 1,
+    "name": "Customer Segmentation"
+  },
+  {
+    "lvl": 1,
+    "name": "Web Registration"
+  },
+
+  {
+    "lvl": 1,
+    "name": "Pricing Optimization"
+  },
+  {
+    "lvl": 1,
+    "name": "Forecasting/Quota Alignment"
+  },
+  {
+    "lvl": 1,
+    "name": "Lead Account Match"
+  },
+  {
+    "lvl": 1,
+    "name": "Net New Logo"
+  },
+  {
+    "lvl": 1,
+    "name": "Sales Territory Management"
+  },
+  {
+    "lvl": 1,
+    "name": "Account Management"
+  },
+  {
+    "lvl": 1,
+    "name": "Sales Incentive Comp"
+  },
+
+  {
+    "lvl": 1,
+    "name": "Organization 360"
+  },
+  {
+    "lvl": 1,
+    "name": "Enterprise Analytics"
+  },
+  {
+    "lvl": 1,
+    "name": "Self Service Analytics"
+  },
+  {
+    "lvl": 1,
+    "name": "Customer Health"
+  },
+
+  {
+    "lvl": 1,
+    "name": "M&A Management"
+  },
+  {
+    "lvl": 1,
+    "name": "Streamlined Collections"
+  },
+  {
+    "lvl": 1,
+    "name": "Financial & Compliance Rpt."
+  },
+  {
+    "lvl": 1,
+    "name": "Regulatory Compliance"
+  },
+
+  {
+    "lvl": 1,
+    "name": "Risk Assessment"
+  },
+  {
+    "lvl": 1,
+    "name": "Tax Calculation"
+  },
+
+  {
+    "lvl": 1,
+    "name": "Avoidance of Manual Work"
+  },
+  {
+    "lvl": 1,
+    "name": "Audit Transparency"
+  },
+
+  {
+    "lvl": 2,
+    "name": "Unique Customer Profile"
+  },
+  {
+    "lvl": 2,
+    "name": "Accurate Information"
+  },
+  {
+    "lvl": 2,
+    "name": "Customer Relationships"
+  },
+  {
+    "lvl": 2,
+    "name": "3rd Party Enrichment"
+  },
+  {
+    "lvl": 2,
+    "name": "Data Governance"
+  },
+  {
+    "lvl": 2,
+    "name": "Technology Framework"
+  },
+
+
+  {
+    "lvl": 3,
+    "name": "Identity Attribute Mgt."
+  },
+  {
+    "lvl": 3,
+    "name": "Core Attribute Mgt."
+  },
+  {
+    "lvl": 3,
+    "name": "Search before Create"
+  },
+  {
+    "lvl": 3,
+    "name": "Match & Merge"
+  },
+  {
+    "lvl": 3,
+    "name": "Trust & Survivorship"
+  },
+  {
+    "lvl": 3,
+    "name": "External Match"
+  },
+  {
+    "lvl": 3,
+    "name": "MDMID Cross Reference"
+  },
+
+  {
+    "lvl": 3,
+    "name": "Synonym Replacement"
+  },
+  {
+    "lvl": 3,
+    "name": "Validation Rules"
+  },
+  {
+    "lvl": 3,
+    "name": "Business Verification"
+  },
+  {
+    "lvl": 3,
+    "name": "Address Validation"
+  },
+
+  {
+    "lvl": 3,
+    "name": "Hierarchy Modeling"
+  },
+  {
+    "lvl": 3,
+    "name": "Related Entities"
+  },
+  {
+    "lvl": 3,
+    "name": "Product Master Relationship"
+  },
+  {
+    "lvl": 3,
+    "name": "Contact Master Relationship"
+  },
+
+  {
+    "lvl": 3,
+    "name": "Firmographic Data"
+  },
+  {
+    "lvl": 3,
+    "name": "Technographic Data"
+  },
+  {
+    "lvl": 3,
+    "name": "Financial Data"
+  },
+  {
+    "lvl": 3,
+    "name": "Activity/Intent Data"
+  },
+
+  {
+    "lvl": 3,
+    "name": "Data Stewardship"
+  },
+  {
+    "lvl": 3,
+    "name": "Metadata Management"
+  },
+  {
+    "lvl": 3,
+    "name": "Data Lineage & Impact"
+  },
+  {
+    "lvl": 3,
+    "name": "Policies & Procedures"
+  },
+  {
+    "lvl": 3,
+    "name": "Data Privacy & Security"
+  },
+
+  {
+    "lvl": 3,
+    "name": "Data Tokenization"
+  },
+  {
+    "lvl": 3,
+    "name": "Ingress/Egress Patterns"
+  },
+  {
+    "lvl": 3,
+    "name": "API Management/Perf"
+  },
+  {
+    "lvl": 3,
+    "name": "Workflows"
+  },
+  {
+    "lvl": 3,
+    "name": "Audit/Exception Reporting"
+  },
+  {
+    "lvl": 3,
+    "name": "AI/ML Support"
+  },
+  {
+    "lvl": 3,
+    "name": "History Tracking"
+  },
+  {
+    "lvl": 3,
+    "name": "Observability"
+  }
+
+]

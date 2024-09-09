@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node-Link Diagram</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        svg {
+            border: 1px solid #ccc;
+        }
+        .node text {
+            pointer-events: none;
+        }
+        #popup {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            display: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<svg width="800" height="600"></svg>
+<div id="popup"></div>
+
+<!-- Load D3.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script>
+    // Hardcoded nodes and links data
+    const nodes = [
+        { "lvl": "0", "name": "Top Line (Growth)", "x": 16, "y": 202.836, "id": "n0" },
+        { "lvl": "1", "name": "Prospect Marketing", "x": 366, "y": 144, "id": "n1" },
+        { "lvl": "1", "name": "Competitive Analysis", "x": 216, "y": 350, "id": "n2" }
+        // Add more nodes as needed
+    ];
+
+    const links = [
+        { "target": "Top Line (Growth)", "source": "Prospect Marketing" },
+        { "target": "Top Line (Growth)", "source": "Competitive Analysis" }
+        // Add more links as needed
+    ];
+
+    // Create a map for node names to node objects
+    const nodeMap = new Map(nodes.map(d => [d.name, d]));
+
+    // Process links to match nodes by names
+    const processedLinks = links.map(link => ({
+        source: nodeMap.get(link.source),
+        target: nodeMap.get(link.target)
+    }));
+
+    // Set up SVG dimensions
+    const width = 800;
+    const height = 600;
+
+    // Create SVG container
+    const svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Create simulation
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(processedLinks).id(d => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+    // Create link elements
+    const link = svg.selectAll(".link")
+        .data(processedLinks)
+        .enter().append("line")
+        .attr("class", "link");
+
+    // Create node elements
+    const node = svg.selectAll(".node")
+        .data(nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended))
+        .on("mouseover", showPopup)
+        .on("mouseout", hidePopup);
+
+    node.append("circle")
+        .attr("r", 10);
+
+    node.append("text")
+        .attr("dy", -15)
+        .attr("text-anchor", "middle")
+        .text(d => d.name);
+
+    // Update positions on each tick
+    simulation.on("tick", () => {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // Drag behavior
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+
+    // Popup functions
+    function showPopup(event, d) {
+        const popup = d3.select("#popup");
+        popup
+            .style("display", "block")
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY + 10) + "px")
+            .html(`<strong>Name:</strong> ${d.name}<br><strong>Level:</strong> ${d.lvl}`);
+    }
+
+    function hidePopup() {
+        d3.select("#popup").style("display", "none");
+    }
+</script>
+</body>
+</html>

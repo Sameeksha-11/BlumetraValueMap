@@ -11,7 +11,7 @@ app.post('/get-token', async (req, res) => {
     const tokenUrl = `https://login.microsoftonline.com/f939db98-9ab3-4b52-8e5a-0d2b6168b56a/oauth2/v2.0/token`;
     const params = new URLSearchParams();
     params.append('client_id', '9575f570-860e-4801-8142-682ec0129c27');
-    params.append('client_secret', 'Wi68Q~SLQ-1eM2XKzXamujdvdTzt5tOTKpFSybe');
+    params.append('client_secret', 'dd9a8af0-44eb-4b45-a43e-bd8df7f66213');
     params.append('grant_type', 'client_credentials');
     params.append('scope', 'https://graph.microsoft.com/.default');
 
