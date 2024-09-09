@@ -76,7 +76,32 @@
         transform: translateY(10px);     
 }
 
-</style>
-<div id="rel_diagram"></div>
+.popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center the popup */
+    padding: 20px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
 
-<script src="d3_relationship_chartv6.js"></script>
+.popup-content{
+    margin-bottom: 10px;
+}
+
+.popup-button {
+    display: inline-block;
+    margin-right: 10px; /* Adds space between the buttons */
+    background: #f1f1f1;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+</style>
+
+<div id="rel_diagram"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="GoogleSheetv5.js"></script>
